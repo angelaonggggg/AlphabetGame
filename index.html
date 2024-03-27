@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>A2</title>
+	<!--Table style-->
+	<style type="text/css">
+		.ablock table th {
+			padding: 10px;
+			background-color: #deeaf6;
+			font-size: 14px;
+		}
+
+		.ablock table td {
+			padding: 10px;
+			text-align: left;
+			font-size: 12px;
+		}
+
+		.ablock table {
+			font-family: arial;
+		}
+
+		.gblock table,
+		th,
+		td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			padding: 15px;
+			font-family: arial;
+		}
+
+		.startButton {
+			padding: 10px 20px;
+			border: 2px solid black;
+			border-radius: 5px;
+			background-color: white;
+			color: black;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.startButton:hover {
+			background-color: #999999;
+		}
+
+		.stopButton {
+			padding: 10px 20px;
+			border: 2px solid black;
+			border-radius: 5px;
+			background-color: #eaeaea;
+			color: black;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.stopButton:hover {
+			background-color: #999999;
+		}
+
+		select {
+			width: 100px;
+			padding: 10px;
+			font-size: 14px;
+		}
+	</style>
+	<script>
+		var changeAlphabet;
+		var seletion;
+		var points;
+		var option1;
+		var option2;
+		var option3;
+		var start = false;
+
+		// start game, restart the points to 0, start the change of alphabet
+		function startIt() {
+			if (start == false) {
+				points = 0;
+				document.getElementById("scoreTotal").innerHTML = points;
+
+				start = true;
+				document.getElementById("selection").disabled = true;
+				changeAlphabet = setInterval(generateAlphabet, 1000);
+			}
+		}
+
+		// stop the game and the change of alphabet
+		function stopIt() {
+			if (start == true) {
+				start = false;
+				clearInterval(changeAlphabet);
+				document.getElementById("selection").disabled = false;
+			}
+		}
+
+		// generate alphabet
+		function generateAlphabet() {
+			var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+			option1 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+			option2 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+			option3 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+
+			// check for any duplicate
+			if ((option1 == option2) || (option1 == option3) || (option2 == option3)) {
+				option2 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+				option3 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+			}
+			else {
+				document.getElementById("firstbox").innerHTML = option1;
+				document.getElementById("secondbox").innerHTML = option2;
+				document.getElementById("thirdbox").innerHTML = option3;
+			}
+		}
+
+		function firstButton() {
+			var selection = document.getElementById("selection").value;
+
+			if (start == true) {
+				if (selection == option1) {
+					points = points + 4;
+					document.getElementById("scoreTotal").innerHTML = points;
+				}
+				else {
+					points = points - 3;
+					document.getElementById("scoreTotal").innerHTML = points;
+				}
+			}
+		}
+		function secondButton() {
+			var selection = document.getElementById("selection").value;
+
+			if (start == true) {
+				if (selection == option2) {
+					points = points + 4;
+					document.getElementById("scoreTotal").innerHTML = points;
+				}
+				else {
+					points = points - 3;
+					document.getElementById("scoreTotal").innerHTML = points;
+				}
+			}
+		}
+
+		function thirdButton() {
+			var selection = document.getElementById("selection").value;
+
+			if (start == true) {
+				if (selection == option3) {
+					points = points + 4;
+					document.getElementById("scoreTotal").innerHTML = points;
+				}
+				else {
+					points = points - 3;
+					document.getElementById("scoreTotal").innerHTML = points;
+				}
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<div class="gblock">
+			<table border="1" width="50%">
+				<!--Game Title-->
+				<tr>
+					<th colspan="3" align="center" ; style="padding:15px; font-size: 150%; background-color: #d9f2ff">
+						Part 2: Game</th>
+				</tr>
+
+				<!--Alphabet and score-->
+				<tr height="60px">
+					<!-- choose and select alphabet -->
+					<td width="33%" style="background-color: #deeaf6;">
+						<b>Your chosen alphabet: </b>
+					</td>
+					<td width="33%" align="center" style="background-color: #deeaf6;">
+						<select id="selection">
+							<option value="A" selected>A</option>
+							<option value="B">B</option>
+							<option value="C">C</option>
+							<option value="D">D</option>
+							<option value="E">E</option>
+							<option value="F">F</option>
+							<option value="G">G</option>
+							<option value="H">H</option>
+							<option value="I">I</option>
+							<option value="J">J</option>
+							<option value="K">K</option>
+							<option value="L">L</option>
+							<option value="M">M</option>
+							<option value="N">N</option>
+							<option value="O">O</option>
+							<option value="P">P</option>
+							<option value="Q">Q</option>
+							<option value="R">R</option>
+							<option value="S">S</option>
+							<option value="T">T</option>
+							<option value="U">U</option>
+							<option value="V">V</option>
+							<option value="X">X</option>
+							<option value="Y">Y</option>
+							<option value="Z">Z</option>
+						</select>
+					</td>
+					<!--Display current score-->
+					<td width="33%" style="background-color: #deeaf6;; font-size: 120%">
+						<b>
+							Current Score:
+							<span id="scoreTotal" ; style="color:red;">0</span>
+						</b>
+					</td>
+				</tr>
+				<!--Start, stop buttons-->
+				<tr>
+					<td colspan="3" align="center" style="background-color: #deeaf6;">
+						<button class="startButton" id="start" onclick="startIt()">Start Game</button>
+						<button class="stopButton" id="stop" onclick="stopIt()">Stop Game</button>
+					</td>
+				</tr>
+				<!-- 3 alphabets button-->
+				<tr height="100px">
+					<td align="center">
+						<p id="firstbox" onclick="firstButton()"
+							style="color: black; padding: 20px; width: 60px; font-size: 150%;">
+						</p>
+					</td>
+					<td align="center">
+						<p id="secondbox" onclick="secondButton()"
+							style="color: black; padding: 20px; width: 60px; font-size: 150%;">
+						</p>
+					</td>
+					<td align="center">
+						<p id="thirdbox" onclick="thirdButton()"
+							style="color: black; padding: 20px; width: 60px; font-size: 150%;">
+						</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>
